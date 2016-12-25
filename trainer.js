@@ -30,23 +30,25 @@ Promise.all([getTrainingImages(), getTrainingLabels()])
     const LABELS_OFFSET = 8
     const IMAGE_SIZE = rows * columns
 
+    const images = new Array(numberOfImages)
+
     for (let n = 0; n < numberOfImages; n++) {
       let image = []
 
       for (let i = 0; i < rows; i++) {
-        image[i] = []
-
         for (let j = 0; j < columns; j++) {
-          image[i][j] = trainingSetImages.readUInt8(IMAGES_OFFSET + n * IMAGE_SIZE + i * columns + j)
+          image[columns * i + j] = trainingSetImages.readUInt8(IMAGES_OFFSET + n * IMAGE_SIZE + i * columns + j)
         }
       }
+
+      images[n] = image
 
       if (n < 10) {
         console.log(`Label: ${trainingSetLabels.readUInt8(LABELS_OFFSET + n)}`)
 
-        drawDigit(image)
-      } else {
-        return
+        drawDigit(image, columns)
       }
     }
+
+    console.log('Done loading images')
   })
