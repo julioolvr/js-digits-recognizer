@@ -1,5 +1,10 @@
+const math = require('mathjs')
+const readline = require('readline')
+
 const { getTrainingImages, getTrainingLabels } = require('./getData')
 const drawDigit = require('./drawDigit')
+
+const cost = require('./cost')
 
 Promise.all([getTrainingImages(), getTrainingLabels()])
   .then(([trainingSetImages, trainingSetLabels]) => {
@@ -51,4 +56,25 @@ Promise.all([getTrainingImages(), getTrainingLabels()])
     }
 
     console.log('Done loading images')
+
+    const labels = new Array(numberOfLabels)
+
+    for (let n = 0; n < numberOfLabels; n++) {
+      labels[n] = trainingSetLabels.readUInt8(LABELS_OFFSET + n)
+    }
+
+    console.log('Done loading images and labels')
+
+    return [math.matrix(images), math.matrix(labels)]
+  }).then(([images, labels]) => {
+    math.forEach(labels, label => {
+      console.log('Calculating cost for label', label)
+      const initialParameters = math.zeros(images.size()[1] + 1)
+      const initialCost = cost(initialParameters, images, labels.map(x => x === 1 ? 1 : 0))
+
+      console.log('initialCost for number', label, initialCost)
+    })
+
+  }).catch(err => {
+    console.log('Error:', err)
   })

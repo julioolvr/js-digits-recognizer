@@ -1,0 +1,22 @@
+{
+  "name": "digits-reader-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "trainer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/julioolvr/js-digits-recognizer.git"
+  },
+  "author": "Julio Olivera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/julioolvr/js-digits-recognizer/issues"
+  },
+  "homepage": "https://github.com/julioolvr/js-digits-recognizer#readme",
+  "dependencies": {
+    "mathjs": "^3.8.1"
+  }
+}
